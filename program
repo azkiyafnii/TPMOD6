@@ -1,0 +1,42 @@
+using System;
+
+class SayaTubeVideo
+{
+    private int id; // ID unik dengan 5 digit angka
+    private string title; // Judul video
+    private int playCount; // Jumlah tayangan video
+
+    // Konstruktor yang menerima judul video, generate ID secara random, dan inisialisasi playCount ke 0
+    public SayaTubeVideo(string title)
+    {
+        Random random = new Random();
+        this.id = random.Next(10000, 99999); // Generate ID 5 digit
+        this.title = title;
+        this.playCount = 0;
+    }
+
+    // Method untuk menambahkan jumlah tayangan
+    public void IncreasePlayCount(int count)
+    {
+        playCount += count;
+    }
+
+    // Method untuk mencetak detail video
+    public void PrintVideoDetails()
+    {
+        Console.WriteLine($"Video ID: {id}");
+        Console.WriteLine($"Title: {title}");
+        Console.WriteLine($"Play Count: {playCount}");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        // Membuat objek video dengan judul tertentu
+        SayaTubeVideo video = new SayaTubeVideo("Tutorial Design By Contract – Afni Azkia");
+        video.IncreasePlayCount(100); // Menambah jumlah tayangan
+        video.PrintVideoDetails(); // Mencetak detail video
+    }
+}
