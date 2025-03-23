@@ -1,0 +1,64 @@
+using System;
+using System.Diagnostics;
+
+class SayaTubeVideo
+{
+    private int id; // ID unik dengan 5 digit angka
+    private string title; // Judul video
+    private int playCount; // Jumlah tayangan video
+
+    // Konstruktor yang menerima judul video, generate ID secara random, dan inisialisasi playCount ke 0
+    public SayaTubeVideo(string title)
+    {
+        Debug.Assert(!string.IsNullOrEmpty(title) && title.Length <= 100, "Judul tidak boleh kosong dan maksimal 100 karakter.");
+
+        Random random = new Random();
+        this.id = random.Next(10000, 99999); // Generate ID 5 digit
+        this.title = title;
+        this.playCount = 0;
+    }
+
+    // Method untuk menambahkan jumlah tayangan
+    public void IncreasePlayCount(int count)
+    {
+        Debug.Assert(count > 0 && count <= 10000000, "Play count harus antara 1 hingga 10.000.000.");
+
+        try
+        {
+            checked
+            {
+                playCount += count;
+            }
+        }
+        catch (OverflowException)
+        {
+            Console.WriteLine("Error: Play count mengalami overflow!");
+        }
+    }
+
+    // Method untuk mencetak detail video
+    public void PrintVideoDetails()
+    {
+        Console.WriteLine($"Video ID: {id}");
+        Console.WriteLine($"Title: {title}");
+        Console.WriteLine($"Play Count: {playCount}");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        // Membuat objek video dengan judul tertentu
+        SayaTubeVideo video = new SayaTubeVideo("Tutorial Design By Contract – Afni Azkia");
+
+        // Menguji prekondisi dan exception
+        for (int i = 0; i < 10; i++)
+        {
+            video.IncreasePlayCount(1000000000); // Percobaan overflow
+        }
+
+        video.IncreasePlayCount(100); // Menambah jumlah tayangan
+        video.PrintVideoDetails(); // Mencetak detail video
+    }
+}
